@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from chardet.universaldetector import UniversalDetector
 import os
+import io
 
 notAllowedExt = ['.zip', '.rar', '.dll', '.exe', '.pdf']
 #0=o, 1=Ko, 2=Mo, 3=Go
@@ -53,3 +54,9 @@ def getFileEncoding(file):
     except:
         return "","Fichier corrompu !"
     return detector.result['encoding'],""
+
+def changeFileEncoding(filePath,currentEncoding,newEncoding):
+    return ''
+
+def getFilePath(request,file):
+    return 'media/files/' + file.name

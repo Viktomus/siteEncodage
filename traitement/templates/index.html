@@ -9,10 +9,10 @@
 		position: absolute;
     	top:-150;
     	bottom: 0;
-    	left: 0;
+    	left: 100;
     	right: 0;
     	margin: auto;
-    	width: 100px;
+    	width: 300px;
     	height: 100px;
 	}
 	</style>
@@ -21,7 +21,19 @@
 		<form enctype="multipart/form-data" method="post">
 			{% csrf_token %}
 			{{ form.as_p}}
+			<p>(Max:50Mo)</p>
 			<button class="btn btn-lg btn-secondary" href="#" type="submit" >Confirmer</button>
-		</div>
-	</form>	
+			{% if erreur != None %}
+			<h4>{{erreurMsg}}</h4>
+			<meta http-equiv="refresh" content="3; URL={{ url }}">
+			{% endif %}
+
+			{% if problem == None %}
+			<h3><u>Informations:</u></h3>
+			<h4>Nom: {{ nom }}</h4>
+			<h4>Taille: {{ taille }} {{ unite }}</h4>
+			<h4>Encodage: {{ encodage }}</h4>
+			{% endif %}
+		</form>	
+	</div>
 </body>

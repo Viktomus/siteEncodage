@@ -1,46 +1,43 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, Http404
 
 from .models import Document,DocumentForm
-from .encodingLib import *
+from .filesManager import *
 
-def confirm(request,name,size,encoding):
-    unit = 'o'
-    koSize = 1000
-    moSize = 1000000
-    goSize = 1000000000
+maxSize = 50
+maxSizeUnit = 2 #Mo
 
-    if size >= koSize and size < moSize:
-        unit = 'Ko'
-        size /= koSize
-    elif size >= moSize and size < goSize:
-        unit = 'Mo'
-        size /= moSize
-    elif size >= goSize:
-        unit = 'Go'
-        size /= goSize
-    size = int(size)
-    indexPage = 'http://' + request.get_host() + '/index'
-
-    if encoding == 'None':
-        encoding = 'UTF-8'
-    else:
-        encoding = encoding.upper()
-
-    return render(request, 'confirm.html', {'nom': name, 'taille': size, 'encodage': encoding, 'unite': unit, 'accueil': indexPage})
-
-def index(request):
+def index(request):#toujours mettre problem=True, sauf quand le traitement est terminé
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
 
         if form.is_valid():
             file = form.cleaned_data['doc']
-            nom = file.name
-            taille = file.size
-            encodage = getFileEncoding(file)
-            return redirect(confirm,name=nom,size=taille,encoding=encodage)
+            size,unit = getFileSizeUnit(file.size)
+
+            if size > maxSize and (unit >= maxSizeUnit):
+                return render(request, 'index.html', {'form': form, 'erreur': True, 'problem': True, 
+                    'erreurMsg': "Fichier trop volumineux ! ({0}".format(size) + getUnitFromInt(unit) + ")"})
+
+            name = file.name
+            size = file.size
+            encoding,errorMsg = getFileEncoding(file)
+            size,unit=getFileSizeUnit(size)
+
+            if encoding == 'None':
+                encoding = 'Inconnu'
+            else:
+                encoding = encoding.upper()
+
+            #Erreurs d'encodage
+            if errorMsg != "":
+                    return render(request, 'index.html', {'form': form, 'problem': True, 'erreur': True,
+                        'erreurMsg': errorMsg, 'url': "http://" + request.get_host() + "/index"})
+            return render(request, 'index.html', {'form': form, 'problem': None,
+                'nom': name, 'taille': size, 'encodage': encoding, 'unite': getUnitFromInt(unit) 
+                })
+
     else:
         form = DocumentForm()
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', {'form': form, 'problem': True})

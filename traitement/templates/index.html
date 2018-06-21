@@ -1,43 +1,55 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
-<body style="background-color:#A9A9A9;">
+
+
+<body style="background-color:#333;">
 	<style type="text/css">	
-	div {
+	divs {
 		position: absolute;
-    	top:-150;
-    	bottom: 0;
+    	top:0;
+    	bottom: 250;
     	left: 100;
     	right: 0;
     	margin: auto;
     	width: 300px;
     	height: 100px;
 	}
-	</style>
 
-	<div>
-		<form enctype="multipart/form-data" method="post">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<p>(Max:50Mo)</p>
-			<button class="btn btn-lg btn-secondary" href="#" type="submit" >Confirmer</button>
+	</style>
+	<divs>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}	
+			<div class="input-group mb-3">
+  				<div class="custom-file">
+    				{{ form.document }}
+    				<label class="custom-file-label" for="inputGroupFile01">Choisissez un fichier</label>
+  				</div>
+			</div>
+
+			 <div class="g-recaptcha" data-theme="light" data-sitekey="{{ googlekey }}" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div> 
+			<p class="lead">
+				<button class="btn btn-lg btn-secondary" href="#" type="submit" style="background-color: white; color:black;"><strong>Confirmer</strong></button>
+			</p>
+			
 			{% if erreur != None %}
-			<h4>{{erreurMsg}}</h4>
+			<h4 style="color:white">{{erreurMsg}}</h4>
 			<meta http-equiv="refresh" content="3; URL={{ url }}">
 			{% endif %}
 
-			{% if problem == None %}
-			<h3><u>Informations:</u></h3>
-			<h4>Nom: {{ nom }}</h4>
-			<h4>Taille: {{ taille }} {{ unite }}</h4>
-			<h4>Encodage: {{ encodage }}</h4>
+			{% if captcha != None %}
+			<p style="color:white">Captcha invalide !</p>
 			{% endif %}
 
-			{% if candownload != None %}
-			<a href="{{ downloadurl }}">Télécharger nouveau fichier</a>
+			{% if problem == None %}
+			<h3 style="color:white"><u>Informations:</u></h3>
+			<h4 style="color:white">Nom: {{ nom }}</h4>
+			<h4 style="color:white">Taille: {{ taille }} {{ unite }}</h4>
+			<h4 style="color:white">Encodage: {{ encodage }}</h4>
 			{% endif %}
 		</form>	
-	</div>
+	</divs>
 </body>

@@ -54,26 +54,3 @@ def getFileEncoding(file):
     except:
         return "","Fichier corrompu !"
     return detector.result['encoding'],""
-
-def changeFileEncoding(file,currentEncoding,newEncoding):#Ne marche pas
-    try:
-        path = getLocalFilePath(file)
-
-        f= open(path, 'rb')
-        ts = f.read().decode(currentEncoding)
-        es = ts.encode(newEncoding) 
-        f= open(path,'wb')
-        f.write(es) 
-    except Exception as e:
-        return e
-
-    return ''
-
-def getFilePath(file):
-    return 'files/files/' + file.name
-
-def getLocalFilePath(file):
-    return 'media/files/' + file.name
-
-def checkCaptcha(request):
-    return ''

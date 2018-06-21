@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django.forms import FileInput
 
 class Document(models.Model):
     doc = models.FileField(upload_to='files/',blank=False)
@@ -8,4 +9,4 @@ class Document(models.Model):
 class DocumentForm(ModelForm):
     class Meta:
         model = Document
-        fields = ('doc','newEncodingField',)
+        fields = ('doc','newEncodingField', )

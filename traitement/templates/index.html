@@ -20,7 +20,7 @@
 	<div>
 		<form enctype="multipart/form-data" method="post">
 			{% csrf_token %}
-			{{ form.as_p}}
+			{{ form.as_p }}
 			<p>(Max:50Mo)</p>
 			<button class="btn btn-lg btn-secondary" href="#" type="submit" >Confirmer</button>
 			{% if erreur != None %}

@@ -14,7 +14,7 @@ def index(request):#toujours mettre problem=True, sauf quand le traitement est t
 
         if form.is_valid():
             file = form.cleaned_data['doc']
-            newEncodingField = form.cleaned_data['newEncodingField']
+            newEncoding = form.cleaned_data['newEncodingField']
             size,unit = getFileSizeUnit(file.size)
             form.save()
 
@@ -29,10 +29,8 @@ def index(request):#toujours mettre problem=True, sauf quand le traitement est t
             encoding,errorMsg = getFileEncoding(file)
             size,unit = getFileSizeUnit(size)
 
-            if encoding == 'None':
-                encoding = 'Inconnu'
-            else:
-                encoding = encoding.upper()
+            if encoding == None:
+                encoding = 'utf8'
 
             #Erreurs d'encodage
             if errorMsg != "":
@@ -40,14 +38,14 @@ def index(request):#toujours mettre problem=True, sauf quand le traitement est t
                         'erreurMsg': errorMsg, 'url': "http://" + request.get_host() + "/index"})
 
             if newEncoding != '':
-                errorMsg = changeFileEncoding(getFilePath(request,file),encoding.lower(),newEncoding)
+                errorMsg = changeFileEncoding(file,encoding,newEncoding)
 
                 if errorMsg != '':
                     return render(request, 'index.html', {'form': form, 'erreur': True, 'problem': True, 
                     'erreurMsg': errorMsg})
                 else:
                     canDownload = True
-                    downloadUrl = getFilePath(request,file)
+                    downloadUrl = getFilePath(file)
     
             return render(request, 'index.html', {'form': form, 'problem': None,
                 'nom': name, 'taille': size, 'encodage': encoding, 'unite': getUnitFromInt(unit), 

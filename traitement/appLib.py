@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 from chardet.universaldetector import UniversalDetector
 import os
-import io
+import sys
 
 notAllowedExt = ['.zip', '.rar', '.dll', '.exe', '.pdf']
 #0=o, 1=Ko, 2=Mo, 3=Go
@@ -55,8 +55,25 @@ def getFileEncoding(file):
         return "","Fichier corrompu !"
     return detector.result['encoding'],""
 
-def changeFileEncoding(filePath,currentEncoding,newEncoding):
+def changeFileEncoding(file,currentEncoding,newEncoding):#Ne marche pas
+    try:
+        path = getLocalFilePath(file)
+
+        f= open(path, 'rb')
+        ts = f.read().decode(currentEncoding)
+        es = ts.encode(newEncoding) 
+        f= open(path,'wb')
+        f.write(es) 
+    except Exception as e:
+        return e
+
     return ''
 
-def getFilePath(request,file):
+def getFilePath(file):
+    return 'files/files/' + file.name
+
+def getLocalFilePath(file):
     return 'media/files/' + file.name
+
+def checkCaptcha(request):
+    return ''

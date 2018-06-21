@@ -36,7 +36,7 @@ def index(request):#toujours mettre problem=True, sauf quand le traitement est t
 
                 if size > maxSize and (unit >= maxSizeUnit):#si le fichier est trop volumineux
                     return render(request, 'index.html', {'form': form, 'erreur': True, 'problem': True, 
-                        'erreurMsg': "Fichier trop volumineux ! (Max:{0}".format(maxSize) + getUnitFromInt(maxSizeUnit) + ")",
+                        'erreurMsg': "Fichier trop volumineux ! (Max:{0}".format(maxSize) + getUnitFromInt(maxSi) + ")",
                         'googlekey': googleKey
                         })
 

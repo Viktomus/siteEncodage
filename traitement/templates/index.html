@@ -28,9 +28,9 @@
   				</div>
 			</div>
 
-			 <div class="g-recaptcha" data-theme="light" data-sitekey="{{ googlekey }}" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div> 
+			 <div id="googlec" class="g-recaptcha" data-callback="recaptchaCallback" data-theme="light" data-sitekey="{{ googlekey }}" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div> 
 			<p class="lead">
-				<button class="btn btn-lg btn-secondary" href="#" type="submit" style="background-color: white; color:black;"><strong>Confirmer</strong></button>
+				<button id="confirmBtn" class="btn btn-lg btn-light" href="#" type="submit" style="background-color: white; color:black;"><strong>Confirmer</strong></button>
 			</p>
 			
 			{% if erreur != None %}
@@ -50,4 +50,5 @@
 			{% endif %}
 		</form>	
 	</divs>
+	<script src="http://localhost:8000/files/scripts/test.js"></script>
 </body>

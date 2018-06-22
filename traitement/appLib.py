@@ -52,5 +52,5 @@ def getFileEncoding(file):
         detector.feed(file.read())
         detector.close()
     except:
-        return "","Fichier corrompu !"
+        return "","Fichier illisible !"
     return detector.result['encoding'],""

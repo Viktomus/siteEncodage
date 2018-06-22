@@ -3,7 +3,6 @@ from chardet.universaldetector import UniversalDetector
 import os
 import sys
 
-notAllowedExt = ['.zip', '.rar', '.dll', '.exe', '.pdf']
 #0=o, 1=Ko, 2=Mo, 3=Go
 
 def getFileSizeUnit(size):
@@ -38,15 +37,7 @@ def getFileExtension(fileName):
     fileName, file_extension = os.path.splitext(fileName)
     return file_extension
 
-def isExtensionAuthorised(fileExt):
-    for ext in notAllowedExt:
-        if ext == fileExt:
-            return False
-    return True
-
 def getFileEncoding(file):
-    if isExtensionAuthorised(getFileExtension(file.name)) == False:
-        return "","Fichier non supporté !"
     try:   
         detector = UniversalDetector()
         detector.feed(file.read())
@@ -54,3 +45,7 @@ def getFileEncoding(file):
     except:
         return "","Fichier illisible !"
     return detector.result['encoding'],""
+
+def getWebAddress(request,replacement='index'):
+    address = request.build_absolute_uri()
+    return address.replace(replacement,'')

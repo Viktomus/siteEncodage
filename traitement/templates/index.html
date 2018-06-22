@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ webaddress }}files/css/style.css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
@@ -6,10 +7,11 @@
 
 <body style="background-color:#333;">
 	<style type="text/css">	
+	html, body {overflow:hidden;}	
 	divs {
 		position: absolute;
     	top:0;
-    	bottom: 250;
+    	bottom: 150;
     	left: 100;
     	right: 0;
     	margin: auto;
@@ -18,13 +20,21 @@
 	}
 
 	</style>
+
+	<header class="v-header container">
+		<div class="fullscreen-video-wrap">
+			<video id="vid" src="" autoplay="true" loop="true">
+			</video>
+		</div>
+	</header>
+
 	<divs>
 		<form method="post" enctype="multipart/form-data">
 			{% csrf_token %}	
 			<div class="input-group mb-3">
   				<div class="custom-file">
     				{{ form.document }}
-    				<label class="custom-file-label" for="inputGroupFile01">Choisissez un fichier</label>
+    				<label id="inputLabel" class="custom-file-label" for="inputGroupFile01">Choisissez un fichier...</label>
   				</div>
 			</div>
 
@@ -38,10 +48,6 @@
 			<meta http-equiv="refresh" content="3; URL={{ url }}">
 			{% endif %}
 
-			{% if captcha != None %}
-			<p style="color:white">Captcha invalide !</p>
-			{% endif %}
-
 			{% if problem == None %}
 			<h3 style="color:white"><u>Informations:</u></h3>
 			<h4 style="color:white">Nom: {{ nom }}</h4>
@@ -50,5 +56,5 @@
 			{% endif %}
 		</form>	
 	</divs>
-	<script src="http://localhost:8000/files/scripts/test.js"></script>
+	<script src="{{ webaddress }}files/scripts/test.js"></script>
 </body>

@@ -5,10 +5,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
+<e id="address" class="{{ webaddress }}files/videos/"></e> <!-- balise pour donner l'addresse à test.js -->
+
 <body style="background-color:#333;">
 	<style type="text/css">	
 	html, body {overflow:hidden;}	
-	divs {
+	divs { 
 		position: absolute;
     	top:0;
     	bottom: 150;
@@ -18,7 +20,6 @@
     	width: 300px;
     	height: 100px;
 	}
-
 	</style>
 
 	<header class="v-header container">
@@ -44,17 +45,17 @@
 			</p>
 			
 			{% if erreur != None %}
-			<h4 style="color:white">{{erreurMsg}}</h4>
+			<h4>{{erreurMsg}}</h4>
 			<meta http-equiv="refresh" content="3; URL={{ url }}">
 			{% endif %}
 
 			{% if problem == None %}
-			<h3 style="color:white"><u>Informations:</u></h3>
-			<h4 style="color:white">Nom: {{ nom }}</h4>
-			<h4 style="color:white">Taille: {{ taille }} {{ unite }}</h4>
-			<h4 style="color:white">Encodage: {{ encodage }}</h4>
+			<h3><u>Informations:</u></h3>
+			<h4>Nom: {{ nom }}</h4>
+			<h4>Taille: {{ taille }} {{ unite }}</h4>
+			<h4>Encodage: {{ encodage }}</h4>
 			{% endif %}
 		</form>	
 	</divs>
-	<script src="{{ webaddress }}files/scripts/test.js"></script>
+	<script src="{{ webaddress }}files/scripts/tscript.js"></script>
 </body>

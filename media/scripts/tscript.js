@@ -64,7 +64,7 @@ function setVideoFromHour()
 	var address = addressTag.className;
 
 	var date = new Date();
-	var hour = date.getHours();
+	var hour = 9;
 	var vid = document.getElementById("vid");
 
 	if(hour >= 8 && hour < 12) //matin
